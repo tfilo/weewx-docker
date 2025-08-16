@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags: [ "*" ]
+
+jobs:
+
+  docker:
+    permissions:
+      actions: read
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: Build the Docker image
+      run: docker build . -f Dockerfile -t ${{secrets.DOCKER_USER}}/weewx:${{github.ref_name}} -t ${{secrets.DOCKER_USER}}/weewx:latest
+    - name: Docker push
+      run: docker image push --all-tags ${{secrets.DOCKER_USER}}/weewx
