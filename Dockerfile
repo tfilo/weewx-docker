@@ -1,7 +1,6 @@
 FROM python:3.13-slim-trixie
 
 ENV WEEWX_VERSION="5.2.0"
-ENV REQUEST_VERSION="2.32.5"
 ENV LANG="sk_SK.UTF-8"
 ENV TZ="Europe/Bratislava"
 
@@ -24,6 +23,6 @@ ENV LC_ALL=${LANG}
 # install weewx using pip
 RUN python3 -m venv ~/weewx-venv
 RUN . ~/weewx-venv/bin/activate
-RUN python3 -m pip install weewx==${WEEWX_VERSION} requests==${REQUEST_VERSION}
+RUN python3 -m pip install weewx==${WEEWX_VERSION}
 
 CMD [ "weewxd" ]
