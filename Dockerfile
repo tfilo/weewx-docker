@@ -15,7 +15,7 @@ VOLUME /root/weewx-html
 
 # update/install required packages
 RUN apt update &&\
-    apt install -y python3-venv locales wget unzip &&\
+    apt install -y python3-venv locales wget unzip build-essential &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log}/
