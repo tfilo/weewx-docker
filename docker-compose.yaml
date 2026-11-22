@@ -13,9 +13,11 @@ services:
             - ./html:/root/weewx-html:rw
 
     nginx:
-        image: nginx
+        image: nginx/nginx-unprivileged:alpine-slim
         restart: unless-stopped
+        healthcheck:
+            test: ['CMD-SHELL', 'wget -q -O /dev/null http://127.0.0.1:8080 || exit 1']
         volumes:
             - ./html:/usr/share/nginx/html:ro
         ports:
-            - '8080:80'
+            - '8080:8080'
